@@ -20,7 +20,6 @@ const Header: React.FC = () => {
                     Recentes
                 </Link>
             </Links>
-
         </Container>
     );
 }
