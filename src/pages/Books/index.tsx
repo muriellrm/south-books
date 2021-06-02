@@ -1,7 +1,9 @@
+import { BottomNavigationAction } from '@material-ui/core';
 import { Form } from '@unform/web';
 import React, { useCallback, useRef, useState } from 'react';
 import { FiBookOpen } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { MdFavorite, MdRestore } from 'react-icons/md';
+import { Link, useHistory } from 'react-router-dom';
 
 import logo from '../../assets/logo-south-system.svg';
 import Card from '../../components/Cards';
@@ -10,14 +12,15 @@ import Loading from '../../components/Loading';
 import { useProvider } from '../../hooks/provider';
 import api from '../../services/api';
 
-import { Container, Header, Content } from './styles';
+import { Container, Header, Content, Links } from './styles';
 
 const Books: React.FC = () => {
 
     const [loading, setLoading] = useState(false);
     const { books, setBooks } = useProvider();
     const formRef = useRef(null);
-
+    const history = useHistory();
+    const [navigate, setNavigate] = useState();
 
     const handleSubmit = useCallback(async ({ book }) => {
         setLoading(true);
@@ -30,7 +33,7 @@ const Books: React.FC = () => {
 
     return (
         <Container>
-            <Loading isLoading={loading} />
+           {loading && <Loading isLoading={loading} />}
             <Header>
                 <Link to="/">
                     <img src={logo} alt="logo" />
@@ -38,14 +41,16 @@ const Books: React.FC = () => {
                 <Form ref={formRef} onSubmit={handleSubmit}>
                     <Input name="book" icon={FiBookOpen} placeholder="Pesquise pelos melhoes livros" />
                 </Form>
-                <div>
-                    <Link to="/favoritos">
-                        Favoritos
-                    </Link>
-                    <Link to="/recentes">
-                        Recentes
-                    </Link>
-                </div>
+                <Links
+                    value={navigate}
+                    onChange={(event, newValue) => {
+                        setNavigate(newValue);
+                    }}
+                    showLabels
+                >
+                    <BottomNavigationAction onClick={() => { history.push('/favorites') }} label="Favorites" icon={<MdFavorite />} />
+                    <BottomNavigationAction onClick={() => { history.push('/recents') }} label="Recents" icon={<MdRestore />} />
+                </Links>
             </Header>
             <Content>
                 <h2>Livros</h2>

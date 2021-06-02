@@ -30,8 +30,8 @@ const HomePage: React.FC = () => {
 
     return (
         <Container>
-            <Loading isLoading={loading} />
-            <Header />
+            {loading && <Loading isLoading={loading} />}
+            <Header  />
             <Content>
                 <Form ref={formRef} onSubmit={handleSubmit}>
                     <h1>Descubra um mundo de novas ideias, e explore o seu conhecimento através da leitura.</h1>

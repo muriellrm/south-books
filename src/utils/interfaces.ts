@@ -4,6 +4,7 @@ export interface IBookProps {
     etag: string;
     selfLink: string;
     volumeInfo: {
+        infoLink: string;
         title: string;
         authors: string[];
         publishedDate: string;

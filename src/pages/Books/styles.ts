@@ -1,3 +1,4 @@
+import { BottomNavigation } from '@material-ui/core';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -17,8 +18,8 @@ export const Content = styled.div`
         display: flex;
         flex-flow: row wrap; 
         align-items: center;
-        justify-content: center;
         list-style: none;        
+        margin-left: 30px;
     }
 
     h2 {
@@ -55,4 +56,18 @@ export const Header = styled.div`
         }
     }
     
+`;
+
+export const Links = styled(BottomNavigation)`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+    }
+
 `;

@@ -1,58 +1,69 @@
-import React, { forwardRef, useCallback, useEffect, useState } from 'react';
-import { Button, DialogActions, DialogContent, DialogContentText, DialogProps, DialogTitle, Slide } from '@material-ui/core';
-import { TransitionProps } from '@material-ui/core/transitions';
+import React, { useCallback, useState } from 'react';
+import { DialogContentText, DialogProps, IconButton } from '@material-ui/core';
+import { BiBookOpen } from 'react-icons/bi';
+import { MdClose, MdFavorite, MdFavoriteBorder } from 'react-icons/md';
+
 import { IBookProps } from '../../utils/interfaces';
 
-import { Container } from './styles';
+import { useProvider } from '../../hooks/provider';
 
-interface BookProps {
+import Button from '../Button';
+
+import { Container, Content, Title, ButtonGroup } from './styles';
+
+interface BookProps extends DialogProps {
     book: IBookProps;
-    details: boolean;
 }
 
-const CardDetails: React.FC<BookProps> = ({ book, details }) => {
-    const [open, setOpen] = useState(false);
-
-    useEffect(() => {
-        setOpen(details);
-    }, [details]);
-
-    const Transition = forwardRef(function Transition(
-        props: TransitionProps & { children?: React.ReactElement<any, any> },
-        ref: React.Ref<unknown>,
-    ) {
-        return <Slide direction="up" ref={ref} {...props} />;
+const CardDetails: React.FC<BookProps> = ({ book, open, onClose, onBackdropClick }) => {
+    const { handleFavorite } = useProvider();
+    const [isFavorite, setIsFavorite] = useState(() => {
+        const existentFavorites = localStorage.getItem('@SouthSystemBooks:favorites');
+        if (existentFavorites) {
+            const favorites = JSON.parse(existentFavorites);
+            const existsFavorite = favorites.find((favorite: IBookProps) => favorite.id === book.id);
+            if (existsFavorite) {
+                return true;
+            }
+        }
+        return false;
     });
 
-    const handleModal = useCallback(() => {
-        setOpen(!open);
-    }, [open]);
+    const handleFavoriteButton = useCallback(() => {
+        handleFavorite(book);
+        setIsFavorite(!isFavorite);
+    }, [handleFavorite, isFavorite, book]);
 
     return (
-        <Container            
+        <Container
             open={open}
-            TransitionComponent={Transition}
             keepMounted
-            onClose={handleModal}
-            aria-labelledby="alert-dialog-slide-title"
-            aria-describedby="alert-dialog-slide-description"            
+            onClose={onClose}
+            fullWidth={true}
+            maxWidth='lg'
         >
-            <DialogTitle id="alert-dialog-slide-title">{"Use Google's location service?"}</DialogTitle>
-            <DialogContent>
+            <Title id="alert-dialog-slide-title">
+                <p>{book.volumeInfo.title}</p>
+                <IconButton edge="start" color="inherit" aria-label="close" onClick={onBackdropClick}>
+                    <MdClose />
+                </IconButton>
+            </Title>
+            <Content>
+                <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
                 <DialogContentText id="alert-dialog-slide-description">
-                    Let Google help apps determine location. This means sending anonymous location data to
-                    Google, even when no apps are running.
+                    <p>{book.volumeInfo.description}</p>
+                    <h5>
+                        <p>Autores: {book.volumeInfo.authors} </p>
+                        <p>Data de Publicação:{book.volumeInfo.publishedDate} </p>
+                    </h5>
+                    <ButtonGroup>
+                        <Button icon={isFavorite ? MdFavorite : MdFavoriteBorder} onClick={handleFavoriteButton} />
+                        <a href={book.volumeInfo.infoLink}><Button icon={BiBookOpen}/></a>
+                    </ButtonGroup>
+
                 </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleModal} color="primary">
-                    Disagree
-          </Button>
-                <Button onClick={handleModal} color="primary">
-                    Agree
-          </Button>
-            </DialogActions>
-        </Container>
+            </Content>
+        </Container >
     );
 };
 

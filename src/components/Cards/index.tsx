@@ -2,24 +2,20 @@ import React, { useCallback, useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
 import { useProvider } from '../../hooks/provider';
+import formatDate from '../../utils/formatDate';
 
-import { BookProps } from '../../utils/interfaces';
+import { BookProps, IBookProps } from '../../utils/interfaces';
 import Button from '../Button';
 import CardDetails from '../CardDetails';
 
 import { Container, BookContent } from './styles';
-
-interface IBooks {
-    id: string;
-    title: string;
-}
 
 const Card: React.FC<BookProps> = ({ book }) => {
     const [icon, setIcon] = useState(() => {
         const existentFavorites = localStorage.getItem('@SouthSystemBooks:favorites');
         if (existentFavorites) {
             const favorites = JSON.parse(existentFavorites);
-            const existsFavorite = favorites.find((favorite: IBooks) => favorite.id === book.id);
+            const existsFavorite = favorites.find((favorite: IBookProps) => favorite.id === book.id);
             if (existsFavorite) {
                 return true;
             }
@@ -27,33 +23,33 @@ const Card: React.FC<BookProps> = ({ book }) => {
         return false;
     });
 
-    const { handleFavorite } = useProvider()
-    const { id, volumeInfo } = book;
+    const { handleFavorite, handleRecent } = useProvider()
+    const { volumeInfo } = book;
     const { title, authors, publishedDate, imageLinks } = volumeInfo;
     const [details, setDetails] = useState(false);
 
     const handleFavoriteButton = useCallback(() => {
-        const favoriteBook = { id, title };
-        handleFavorite(favoriteBook);
+        handleFavorite(book);
         setIcon(!icon);
-    }, [handleFavorite, icon, id, title]);
+    }, [handleFavorite, icon, book]);
 
     const handleDetails = useCallback(() => {
+        handleRecent(book);
         setDetails(!details);
-    }, [details]);
+    }, [handleRecent, details, book]);
 
     return (
         <Container >
             <img src={imageLinks.thumbnail} alt="" />
             <BookContent>
                 <h3>{title}</h3>
-                <p>{authors} {publishedDate && ' - '.concat(publishedDate)}</p>
+                <p>{authors} {!!publishedDate ? authors ? ' - '.concat(formatDate(publishedDate)) : formatDate(publishedDate) : ''}</p>
             </BookContent>
             <ul>
                 <li><Button icon={icon ? MdFavorite : MdFavoriteBorder} onClick={handleFavoriteButton} /></li>
                 <li><Button icon={FiPlus} onClick={handleDetails} /></li>
             </ul>
-            <CardDetails book={book} details={details}  />
+            {details && <CardDetails book={book} onClose={() => { setDetails(!details) }} onBackdropClick={() => { setDetails(!details) }} open={details} />}
         </Container>
     );
 }
