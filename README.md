@@ -14,13 +14,13 @@ Funcionalidades:
  
 Tecnologias utilizadas:
 
-ReactJS
-Typescript
-Styled Components
-Context Api
-Api Google Books
-Jest
-Mock
+ - ReactJS
+ - Typescript
+ - Styled Components
+ - Context Api
+ - Api Google Books
+ - Jest
+ - Mock
 
 Para executar o projeto em modo desenvolvimento:
 `npm start` ou `yarn start`
@@ -32,7 +32,7 @@ Gerar os testes do projeto para produção:
 `npm test` ou `yarn test`
 
 ### Melhorias futuras
-Aumentar a cobertura de testes
-Inserir Toasts para exibição de mensagem
-Validação dos inputs
-Criar um header, e os detalhes do card diferentes para acessos ao mobile.
+- Aumentar a cobertura de testes
+- Inserir Toasts para exibição de mensagem
+- Validação dos inputs
+- Criar um header, e os detalhes do card diferentes para acessos ao mobile.
