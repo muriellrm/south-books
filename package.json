@@ -4,9 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.4",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "@unform/core": "^2.1.6",
     "@unform/web": "^2.1.6",
     "axios": "^0.21.1",
@@ -45,8 +43,11 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.13.13",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.1.10",
     "@types/axios": "^0.14.0",
-    "@types/jest": "^26.0.15",
     "@types/moment": "^2.13.0",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
@@ -54,5 +55,14 @@
     "@types/react-icons": "^3.0.0",
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.9"
+  },
+  "jest": {
+    "collectCoverageFrom": [      
+      "src/pages/Home/*.tsx",
+      "src/pages/Books/*.tsx",
+      "src/components/Button/*.tsx",          
+      "src/components/Input/*.tsx",          
+      "src/components/Cards/*.tsx"         
+    ]
   }
 }

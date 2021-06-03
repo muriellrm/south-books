@@ -10,6 +10,7 @@ import { useProvider } from '../../hooks/provider';
 import Button from '../Button';
 
 import { Container, Content, Title, ButtonGroup } from './styles';
+import formatDate from '../../utils/formatDate';
 
 interface BookProps extends DialogProps {
     book: IBookProps;
@@ -51,10 +52,10 @@ const CardDetails: React.FC<BookProps> = ({ book, open, onClose, onBackdropClick
             <Content>
                 <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
                 <DialogContentText id="alert-dialog-slide-description">
-                    <p>{book.volumeInfo.description}</p>
+                    <p>{book.volumeInfo.description.length > 500 ? book.volumeInfo.description.substr(0, 500) : book.volumeInfo.description }...</p>
                     <h5>
                         <p>Autores: {book.volumeInfo.authors} </p>
-                        <p>Data de Publicação:{book.volumeInfo.publishedDate} </p>
+                        {book.volumeInfo.publishedDate && <p>Data de Publicação: {formatDate(book.volumeInfo.publishedDate)} </p>}
                     </h5>
                     <ButtonGroup>
                         <Button icon={isFavorite ? MdFavorite : MdFavoriteBorder} onClick={handleFavoriteButton} />

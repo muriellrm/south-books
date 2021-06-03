@@ -27,7 +27,7 @@ const Card: React.FC<BookProps> = ({ book }) => {
     const { volumeInfo } = book;
     const { title, authors, publishedDate, imageLinks } = volumeInfo;
     const [details, setDetails] = useState(false);
-
+    
     const handleFavoriteButton = useCallback(() => {
         handleFavorite(book);
         setIcon(!icon);
@@ -42,12 +42,12 @@ const Card: React.FC<BookProps> = ({ book }) => {
         <Container >
             <img src={imageLinks.thumbnail} alt="" />
             <BookContent>
-                <h3>{title}</h3>
-                <p>{authors} {!!publishedDate ? authors ? ' - '.concat(formatDate(publishedDate)) : formatDate(publishedDate) : ''}</p>
+                <h3>{title.substr(0, 80)}</h3>
+                <p>{authors && authors[0]} {!!publishedDate ? authors ? ' - '.concat(formatDate(publishedDate)) : formatDate(publishedDate) : ''}</p>
             </BookContent>
             <ul>
-                <li><Button icon={icon ? MdFavorite : MdFavoriteBorder} onClick={handleFavoriteButton} /></li>
-                <li><Button icon={FiPlus} onClick={handleDetails} /></li>
+                <li><Button icon={icon ? MdFavorite : MdFavoriteBorder} onClick={handleFavoriteButton} data-testid='handleFavoriteButton'/></li>
+                <li><Button icon={FiPlus} onClick={handleDetails} data-testid='handleDetails'/></li>
             </ul>
             {details && <CardDetails book={book} onClose={() => { setDetails(!details) }} onBackdropClick={() => { setDetails(!details) }} open={details} />}
         </Container>

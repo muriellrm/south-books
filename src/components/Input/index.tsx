@@ -35,7 +35,7 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
     }, [fieldName, registerField])
 
     return (
-        <Container isFilled={isFilled} isFocused={isFocused} isErrored={!!error}>
+        <Container isFilled={isFilled} isFocused={isFocused} isErrored={!!error} data-testid='input-container'>
             {Icon && <Icon size={20} />}
             <input
                 onFocus={handleInputFocus}
@@ -43,7 +43,7 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
                 defaultValue={defaultValue}
                 ref={inputRef}
                 {...rest} />
-            <button type='submit'><FiSearch /></button>
+            <button type='submit' data-testid='pesquisar'><FiSearch /></button>
         </Container>
     )
 };

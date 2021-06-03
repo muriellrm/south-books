@@ -73,6 +73,11 @@ export const BookContent = styled.div`
 
     p {
         margin-top: 10px;
-        font-size: 12px;        
+        font-size: 12px;  
+        width: 100%;
+        max-width: 250px;
+        display: flex;
+        align-items: center; 
+        justify-content: center;     
     }   
 `;

@@ -22,7 +22,7 @@ const HomePage: React.FC = () => {
 
     const handleSubmit = useCallback(async ({ book }) => {
         setLoading(true);
-        const books = await api.get(`/volumes?q=${book || 'React Js'}&maxResults=40&filter=ebooks`);
+        const books = await api.get(`/volumes?q=${book || 'React Js'}&maxResults=12&filter=ebooks`);
         setBooks(books.data.items);
         setLoading(false);
         history.push('/books');
@@ -35,7 +35,7 @@ const HomePage: React.FC = () => {
             <Content>
                 <Form ref={formRef} onSubmit={handleSubmit}>
                     <h1>Descubra um mundo de novas ideias, e explore o seu conhecimento através da leitura.</h1>
-                    <Input name="book" icon={FiBookOpen} placeholder="Pesquise pelos melhoes livros" />
+                    <Input name="book" id="book" icon={FiBookOpen} placeholder="Pesquise pelos melhores livros" />
                 </Form>
             </Content>
         </Container>

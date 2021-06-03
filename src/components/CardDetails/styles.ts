@@ -37,6 +37,16 @@ export const Content = styled(DialogContent)`
    
     margin: 40px 40px;
 
+    @media(max-width: 600px){        
+        flex-direction: column;   
+        align-items: center;
+        justify-content: center;
+
+        img {
+            margin-bottom:  20px;
+        }     
+    }
+
     img {
         border: 2px solid black;
       
