@@ -25,8 +25,7 @@ const Books: React.FC = () => {
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
 
-    const handleSubmit = useCallback(async ({ book }) => {
-        console.log(window.innerWidth);
+    const handleSubmit = useCallback(async ({ book }) => {        
         setSearch(book);
         setLoading(true);
         const googleBooks = await api.get(`/volumes?q=${book || 'React Js'}&maxResults=12&filter=ebooks`);

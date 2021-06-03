@@ -28,6 +28,9 @@ Para executar o projeto em modo desenvolvimento:
 Gerar projeto para produção:
 `npm run build` ou `yarn build`
 
+Gerar os testes do projeto para produção:
+`npm test` ou `yarn test`
+
 ### Melhorias futuras
 Aumentar a cobertura de testes
 Inserir Toasts para exibição de mensagem
