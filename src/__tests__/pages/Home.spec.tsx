@@ -16,7 +16,7 @@ jest.mock('react-router-dom', () => {
 jest.mock('../../hooks/provider', () => {
     return {
         useProvider: () => ({
-            setBooks: jest.fn()
+            setBookSearched: jest.fn()
         })
     }
 })

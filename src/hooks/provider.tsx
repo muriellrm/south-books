@@ -2,17 +2,17 @@ import React, { createContext, useCallback, useState, useContext } from 'react';
 import { IBookProps } from '../utils/interfaces';
 
 interface ContextData {
-    books: Array<IBookProps>;
+    book: string;
+    setBookSearched(book: string): void;
     handleFavorite(book: IBookProps): void;
     handleRecent(book: IBookProps): void;
-    setBooks(books: []): void;
 }
 
 const Context = createContext<ContextData>({} as ContextData);
 
 export const Provider: React.FC = ({ children }) => {
 
-    const [data, setData] = useState([]);    
+    const [data, setData] = useState('');
 
     const handleFavorite = useCallback((book: IBookProps) => {
         const existsFavorites = localStorage.getItem('@SouthSystemBooks:favorites');
@@ -51,13 +51,13 @@ export const Provider: React.FC = ({ children }) => {
 
     }, []);
 
-    const setBooks = useCallback((books) => {
-        setData(books)
+    const setBookSearched = useCallback((book) => {
+        setData(book);
     }, []);
 
 
     return (
-        <Context.Provider value={{ books: data, handleFavorite, handleRecent, setBooks }}>
+        <Context.Provider value={{ book: data, handleFavorite, handleRecent, setBookSearched }}>
             {children}
         </Context.Provider>
     );

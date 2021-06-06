@@ -18,8 +18,8 @@ jest.mock('react-router-dom', () => {
 jest.mock('../../hooks/provider', () => {
     return {
         useProvider: () => ({
-            setBooks: mockedOnSubmit,
-            books: []
+            setBookSearched: mockedOnSubmit,
+            book: 'teste'
         })
     }
 })
