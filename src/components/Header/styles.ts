@@ -9,6 +9,19 @@ export const Container = styled.div`
     padding: 0 30px;
     background-color: #FFF;
     opacity: 0.9;
+    
+    form {
+        div{
+            width: 500px;
+            height: 60px;
+                        
+            button {
+                width: 40px;
+                height: 40px;
+                
+            }
+        }
+    }
 
     img {
         width: 300px;
